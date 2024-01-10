@@ -1,0 +1,41 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button.active {
+    background-color: #0056b3;
+}
+
+
+.first-page,
+.previous-page,
+.next-page,
+.last-page {
+    width: auto;
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+
+button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    border: 1px solid #007bff;
+}
