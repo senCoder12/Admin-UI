@@ -20,5 +20,14 @@ button {
     background-color: #007bff;
     color: #fff;
     cursor: pointer;
+    border-radius: 8px;
     border: none;
+}
+
+.data-table input {
+    cursor: pointer;
+}
+
+.data-table tr.selected-row {
+    background-color: #a2d8ff;
 }

@@ -1,10 +1,11 @@
 import './App.css';
 import GridPage from './Page/GridPage';
+import MainPage from './Page/MainPage';
 
 function App() {
   return (
     <div className="App">
-      <GridPage/>
+      <MainPage/>
     </div>
   );
 }

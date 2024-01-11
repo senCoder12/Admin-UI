@@ -4,6 +4,7 @@ import { BiSolidEdit } from "react-icons/bi";
 
 const Table = ({ data, onEdit, onDelete }) => {
     const [selectedItems, setSelectedItems] = useState([]);
+    const [editableItemId, setEditableItemId] = useState(null);
 
     const handleCheckboxChange = (itemId) => {
         const updatedSelection = [...selectedItems];
@@ -18,6 +19,25 @@ const Table = ({ data, onEdit, onDelete }) => {
         setSelectedItems(updatedSelection);
     };
 
+    const handleCheckboxAllChange = () => {
+        const allVisibleIds = data.map(item => item.id);
+        const allSelected = selectedItems.length === allVisibleIds.length;
+
+        if (allSelected) {
+            setSelectedItems([]);
+        } else {
+            setSelectedItems(allVisibleIds);
+        }
+    };
+
+    const handleEditClick = (itemId) => {
+        setEditableItemId(itemId);
+    };
+
+    const handleSaveClick = () => {
+        setEditableItemId(null);
+    };
+
     const handleDeleteSelected = () => {
         onDelete(selectedItems);
         setSelectedItems([]);
@@ -29,7 +49,9 @@ const Table = ({ data, onEdit, onDelete }) => {
                 <thead>
                     <tr>
                         <th>
-                            <input type="checkbox" onChange={() => { }} checked={selectedItems.length === data.length} />
+                            <input type="checkbox" 
+                                onChange={handleCheckboxAllChange} 
+                                checked={selectedItems.length === data.length} />
                         </th>
                         <th>Name</th>
                         <th>Email</th>
@@ -39,7 +61,7 @@ const Table = ({ data, onEdit, onDelete }) => {
                 </thead>
                 <tbody>
                     {data.map((item) => (
-                        <tr key={item.id}>
+                        <tr key={item.id} className={selectedItems.includes(item.id) ? 'selected-row' : ''}>
                             <td>
                                 <input
                                     type="checkbox"
@@ -47,18 +69,47 @@ const Table = ({ data, onEdit, onDelete }) => {
                                     checked={selectedItems.includes(item.id)}
                                 />
                             </td>
-                            <td contentEditable={true} suppressContentEditableWarning={true}>
-                                {item.name}
-                            </td>
-                            <td contentEditable={true} suppressContentEditableWarning={true}>
-                                {item.email}
-                            </td>
-                            <td contentEditable={true} suppressContentEditableWarning={true}>
-                                {item.role}
+                            <td>
+                                {editableItemId === item.id ? (
+                                    <input
+                                        type="text"
+                                        value={item.name}
+                                        onChange={(e) => onEdit({ ...item, name: e.target.value })}
+                                    />
+                                ) : (
+                                    item.name
+                                )}
                             </td>
                             <td>
-                                <div onClick={() => onEdit(item)}><BiSolidEdit />
-</div>
+                                {editableItemId === item.id ? (
+                                    <input
+                                        type="text"
+                                        value={item.email}
+                                        onChange={(e) => onEdit({ ...item, email: e.target.value })}
+                                    />
+                                ) : (
+                                    item.email
+                                )}
+                            </td>
+                            <td>
+                                {editableItemId === item.id ? (
+                                    <input
+                                        type="text"
+                                        value={item.role}
+                                        onChange={(e) => onEdit({ ...item, role: e.target.value })}
+                                    />
+                                ) : (
+                                    item.role
+                                )}
+                            </td>
+                            <td>
+                                {editableItemId === item.id ? (
+                                    <button onClick={handleSaveClick}>Save</button>
+                                ) : (
+                                    <div onClick={() => handleEditClick(item.id)}>
+                                        <BiSolidEdit />
+                                    </div>
+                                )}
                             </td>
                         </tr>
                     ))}

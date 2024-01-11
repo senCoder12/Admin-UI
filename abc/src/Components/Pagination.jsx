@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
 import '../CSS/pagination.css';
-import { IoArrowBack , IoArrowForward  } from "react-icons/io5";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     const generatePageNumbers = () => {
         const pageNumbers = [];
-        for (let i = 1; i <= totalPages; i++) {
+        const maxButtons = 4;
+
+        let startPage = Math.max(currentPage - Math.floor(maxButtons / 2), 1);
+        let endPage = startPage + maxButtons - 1;
+
+        if (endPage > totalPages) {
+            endPage = totalPages;
+            startPage = Math.max(endPage - maxButtons + 1, 1);
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
             pageNumbers.push(i);
         }
         return pageNumbers;
@@ -22,13 +32,12 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                 onClick={() => handlePageClick(currentPage - 1)}
                 disabled={currentPage === 1}
             >
-                <IoArrowBack  />
+                <FaArrowLeft />
             </button>
             {generatePageNumbers().map((pageNumber) => (
                 <button
                     key={pageNumber}
-                    className={`${currentPage === pageNumber ? 'active' : ''} ${currentPage === 1 ? 'first-page' : ''} 
-                                ${currentPage === totalPages ? 'next-page' : ''}`}
+                    className={`${currentPage === pageNumber ? 'active' : ''}`}
                     onClick={() => handlePageClick(pageNumber)}
                 >
                     {pageNumber}
@@ -39,7 +48,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                 onClick={() => handlePageClick(currentPage + 1)}
                 disabled={currentPage === totalPages}
             >
-                <IoArrowForward  />
+                <FaArrowRight />
             </button>
         </div>
     );
