@@ -117,7 +117,7 @@ const Table = ({ data, onEdit, onDelete }) => {
             </table>
             {selectedItems.length > 0 && (
                 <div>
-                    <button onClick={handleDeleteSelected}>Delete Selected</button>
+                    <button onClick={handleDeleteSelected} style={{background: "#f61f1f"}}>Delete Selected</button>
                 </div>
             )}
         </div>

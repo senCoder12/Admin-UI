@@ -12,7 +12,9 @@ const GridPage = ({data}) => {
 
     // Filtering based on the search term
     const filteredData = data && data.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.role.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     // Pagination logic

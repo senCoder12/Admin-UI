@@ -16,7 +16,7 @@ const SearchBox = ({ onSearch }) => {
         <div className="search-box">
             <input
                 type="text"
-                placeholder="Enter search term..."
+                placeholder="Search by name, email or role..."
                 value={searchTerm}
                 onChange={handleSearchChange}
             />
